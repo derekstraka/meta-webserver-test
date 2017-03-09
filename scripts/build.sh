@@ -4,7 +4,7 @@
 export MACHINE="${MACHINE-qemux86-64}"
 
 # What to build
-BUILD_TARGETS=`find poky/meta-openembedded/meta-webserver -name '*.bb' | xargs -n1 basename | cut -d '_' -f 1 | tr '\n' ' '`
+BUILD_TARGETS=`find poky/meta-openembedded/meta-webserver -name '*.bb' | xargs -n1 basename | cut -d '_' -f 1 | grep -v xdebug | tr '\n' ' '`
 
 die() {
     echo "$*" >&2
