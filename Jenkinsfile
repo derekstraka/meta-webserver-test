@@ -1,3 +1,13 @@
+properties(
+    [
+        [
+            $class: 'BuildDiscarderProperty',
+            strategy: [$class: 'LogRotator', numToKeepStr: '5']
+        ],
+        pipelineTriggers([cron('@daily')]),
+    ]
+)
+
 def targets = [ 'qemux86-64' ]
 
 def machine_builds = [:]
@@ -15,7 +25,7 @@ for (int i = 0; i < targets.size(); i++) {
                     sh "./scripts/setup-env.sh"
                 }
                 stage("fetch $machine") {
-                    sh "GIT_LOCAL_REF_DIR=/srv/git-cache/ ./scripts/fetch.sh master-next"
+                    sh "GIT_LOCAL_REF_DIR=/srv/git-cache/ ./scripts/fetch.sh master"
                 }
                 stage("build $machine") {
                     sh "MACHINE=${machine} ./scripts/build.sh"
